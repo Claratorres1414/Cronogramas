@@ -13,6 +13,7 @@ model Ticket {
   title       String
   description String
   phase       String
+  module      String @default("Geral")
   weight      Int
   completed   Boolean @default(false)
 
