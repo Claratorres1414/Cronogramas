@@ -41,35 +41,50 @@ function renderTickets(tickets) {
             tag: "Fase 1",
             title: "Fundação e infraestrutura",
             milestone: "M1",
-            weeks: "Semanas 1–2"
+            weeks: "Semana 1",
+
+            calloutLabel: "✓ milestone M1 — entrega ao final da semana 1",
+            calloutText: "API em /api/v1/ respondendo com erros padronizados · banco com schema inicial migrado · frontend com rotas e contexto de auth · spikes documentados desbloqueando fases seguintes."
         },
 
         p2: {
             tag: "Fase 2",
             title: "Autenticação completa",
             milestone: "M2",
-            weeks: "Semanas 3–6"
+            weeks: "Semana 2",
+
+            calloutLabel: "⬡ sincronização obrigatória — semana 2",
+            calloutText: "Validar fluxo completo integrado: registro → ativação 2FA + QR code → login (senha + TOTP) → JWT emitido → refresh automático → logout com denylist. Nenhuma Fase 3 começa sem esse fluxo validado pelos três engenheiros."
         },
 
         p3: {
             tag: "Fase 3",
             title: "Core do produto — assinatura e verificação de PDFs",
             milestone: "M3",
-            weeks: "Semanas 7–10"
+            weeks: "Semana 3",
+
+            calloutLabel: "⬡ sincronização obrigatória — semana 3",
+            calloutText: "Teste end-to-end: usuário autenticado faz upload → posiciona selo → assina → baixa PDF. Sem login, carrega o mesmo PDF em /verificar → resultado \"íntegro\". Alterar 1 byte do PDF e verificar novamente → resultado \"adulterado\". Testar PDF com JS → deve ser rejeitado na entrada."
         },
 
         p4: {
             tag: "Fase 4",
             title: "Hardening de segurança",
             milestone: "M4",
-            weeks: "Semanas 11–13"
+            weeks: "Semana 4",
+
+            calloutLabel: "✓ milestone M4 — entrega ao final da semana 4",
+            calloutText: "Score A+ no SecurityHeaders.com · audit log registrando todos os eventos obrigatórios · painel de sessões com revogação funcionando · CSRF protection testada manualmente."
         },
 
         p5: {
             tag: "Fase 5",
             title: "Qualidade, testes e entrega",
             milestone: "M5",
-            weeks: "Semanas 14–16"
+            weeks: "Semana 5",
+
+            calloutLabel: "✓ milestone M5 — entrega final semana 5",
+            calloutText: "100% dos requisitos implementados e verificados · pentest realizado sem vulnerabilidades críticas abertas · testes E2E passando no CI · documentação completa e .env.example revisado."
         }
     };
 
@@ -177,6 +192,27 @@ function renderTickets(tickets) {
             section.appendChild(moduleEl);
         });
 
+        const callout = document.createElement("div");
+
+        callout.className = "sync-callout";
+
+        callout.style.background = `var(--${phaseKey}-bg`;
+        callout.style.borderColor = `var(--${phaseKey}-accent`;
+
+        callout.innerHTML = `
+            <div
+                class="sc-label"
+                style="color: var(--${phaseKey}-accent)"
+            >
+                ${phase.calloutLabel}
+            </div>
+            
+            <p>
+                ${phase.calloutText}
+            </p>
+        `;
+
+        section.appendChild(callout)
         main.appendChild(section);
     });
 }
