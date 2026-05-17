@@ -7,7 +7,12 @@ const prisma = new PrismaClient();
 
 const ticketRoutes = require("./routes/ticketRoutes");
 
-app.use(cors());
+app.use(cors({
+    origin: [
+        "http://localhost:5500",
+        "https://SEU-FRONT.vercel.app"
+    ]
+}));
 app.use(express.json());
 app.use("/tickets", ticketRoutes);
 
@@ -56,6 +61,8 @@ app.patch("/tickets/:id/completion", async (req, res) => {
     res.json(ticket);
 });
 
-app.listen(3000, () => {
-    console.log("API rodando em http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`API rodando na porta ${PORT}`);
 });
