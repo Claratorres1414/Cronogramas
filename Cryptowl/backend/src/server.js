@@ -5,8 +5,11 @@ const { PrismaClient } = require("@prisma/client");
 const app = express();
 const prisma = new PrismaClient();
 
+const ticketRoutes = require("./routes/ticketRoutes");
+
 app.use(cors());
 app.use(express.json());
+app.use("/tickets", ticketRoutes);
 
 app.get("/", (req, res) => {
     res.json({
