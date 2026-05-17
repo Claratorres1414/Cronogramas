@@ -9,8 +9,7 @@ const ticketRoutes = require("./routes/ticketRoutes");
 
 app.use(cors({
     origin: [
-        "http://localhost:5500",
-        "https://SEU-FRONT.vercel.app"
+        "https://cronograma-cryptowl.vercel.app"
     ]
 }));
 app.use(express.json());
