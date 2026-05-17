@@ -60,6 +60,22 @@ app.patch("/tickets/:id/completion", async (req, res) => {
     res.json(ticket);
 });
 
+app.patch("/tickets/:id/assign", async (req, res) => {
+
+    const { assignedTo } = req.body;
+
+    const ticket = await prisma.ticket.update({
+        where: {
+            id: Number(req.params.id)
+        },
+        data: {
+            assignedTo
+        }
+    });
+
+    res.json(ticket);
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
