@@ -1,5 +1,12 @@
 const API_URL = "https://cronograma-cryptowl.onrender.com/tickets";
 
+const MEMBERS = [
+    "no one",
+    "c3ts",
+    "cauatop",
+    "mateuzin-bm"
+];
+
 function filter(phase) {
     document.querySelectorAll('.pnav').forEach(b => b.classList.remove('active'));
     if (phase === 'all') {
@@ -59,6 +66,24 @@ async function toggleTicket(ticketId, button) {
 
         button.textContent = isCompleted ? "" : "";
 
+        console.error(err);
+    }
+}
+
+async function assignTicket(ticketId, assignedTo) {
+
+    try {
+        await fetch(`${API_URL}/${ticketId}/assign`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                assignedTo
+            })
+        });
+
+    } catch (err) {
         console.error(err);
     }
 }
@@ -194,16 +219,32 @@ function renderTickets(tickets) {
                                     ${ticket.code}
                                 </span>
                                 
+                                <div class="ticket-assign">
+                                    <select
+                                        class="assign-select ${phaseKey}"
+                                        onchange="assignTicket(${ticket.id}, this.value)"
+                                    >
+                                        ${MEMBERS.map(member => `
+                                            <option
+                                                value="${member}"
+                                                ${ticket.assignedTo === member ? "selected" : ""}
+                                            >
+                                                ${member}
+                                            </option>
+                                        `).join("")}
+                                    </select>
+                                </div>
+                                
+                                <span class="weight-badge w${ticket.weight}">
+                                    peso ${ticket.weight}
+                                </span>
+                                
                                 <button
                                     class="ticket-check ${ticket.completed ? 'checked' : ''}"
                                     onclick="toggleTicket(${ticket.id}, this)"
                                 >
                                     ${ticket.completed ? "" : ""}
                                 </button>
-
-                                <span class="weight-badge w${ticket.weight}">
-                                    peso ${ticket.weight}
-                                </span>
                             </div>
 
                             <div class="ticket-title">
@@ -257,5 +298,6 @@ function renderTickets(tickets) {
 loadTickets();
 
 window.toggleTicket = toggleTicket;
+window.assignTicket = assignTicket;
 window.filter = filter;
 countTickets();

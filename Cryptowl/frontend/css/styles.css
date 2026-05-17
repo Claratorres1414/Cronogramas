@@ -234,9 +234,9 @@ body {
 
 .ticket-top {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
     margin-bottom: 8px;
 }
 .ticket-id {
@@ -309,7 +309,48 @@ body {
     line-height: 1;
 }
 
+.ticket-assign {
+    width: auto;
+}
+
+.assign-select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border2);
+    border-radius: 0;
+    color: var(--faint);
+    padding: 2px 4px;
+    font-size: 10px;
+    font-family: var(--mono);
+    letter-spacing: .03em;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: color .15s, border-color .15s;
+}
+
+
+.assign-select:hover,
+.assign-select:focus {
+    color: var(--text);
+    border-color: var(--faint);
+}
+
+.assign-select.p1 { color: var(--p1-accent); }
+.assign-select.p2 { color: var(--p2-accent); }
+.assign-select.p3 { color: var(--p3-accent); }
+.assign-select.p4 { color: var(--p4-accent); }
+.assign-select.p5 { color: var(--p5-accent); }
+
+.assign-select:focus {
+    border-color: var(--border2);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--border2) 30%, transparent);
+}
+
 .weight-badge {
+    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 4px;

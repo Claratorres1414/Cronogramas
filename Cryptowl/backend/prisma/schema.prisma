@@ -8,15 +8,17 @@ datasource db {
 }
 
 model Ticket {
-  id          Int     @id @default(autoincrement())
-  code        String  @unique
+  id          Int       @id @default(autoincrement())
+  code        String    @unique
   title       String
   description String
   phase       String
-  module      String @default("Geral")
+  module      String    @default("Geral")
   weight      Int
-  completed   Boolean @default(false)
+  completed   Boolean   @default(false)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  assignedTo  String    @default("No one")
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
