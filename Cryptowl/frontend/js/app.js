@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/tickets";
+const API_URL = "https://cronograma-cryptowl.onrender.com/tickets";
 
 function filter(phase) {
     document.querySelectorAll('.pnav').forEach(b => b.classList.remove('active'));
