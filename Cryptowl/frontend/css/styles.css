@@ -247,6 +247,68 @@ body {
     white-space: nowrap;
     padding-top: 1px;
 }
+.ticket.done {
+    opacity: .68;
+    background: #141417;
+}
+
+.ticket.done .ticket-title {
+    text-decoration: line-through;
+    color: #8b8b93;
+}
+
+.ticket.done .ticket-desc {
+    color: #66666d;
+}
+
+.ticket.done::before {
+    background: #22c55e !important;
+}
+
+.ticket-check {
+    width: 16px;
+    height: 16px;
+
+    border-radius: 999px;
+    border: 1px solid var(--border2);
+
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+            background .15s,
+            border-color .15s,
+            transform .12s;
+
+    flex-shrink: 0;
+}
+
+.ticket-check:hover {
+    border-color: #666;
+    transform: scale(1.05);
+}
+
+.ticket-check.checked {
+    background: #22c55e;
+    border-color: #22c55e;
+    color: aliceblue;
+}
+
+.ticket-check.checked::after {
+    content: '✓';
+
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+
+    line-height: 1;
+}
+
 .weight-badge {
     display: flex;
     align-items: center;

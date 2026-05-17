@@ -33,6 +33,36 @@ async function loadTickets() {
     }
 }
 
+async function toggleTicket(ticketId, button) {
+    const ticketEl = button.closest(".ticket");
+
+    const isCompleted = ticketEl.classList.contains("done");
+
+    ticketEl.classList.toggle("done");
+    button.classList.toggle("checked");
+
+    button.textContent = isCompleted ? "" : "";
+
+    try {
+        await fetch(`${API_URL}/${ticketId}/completion`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                completed: !isCompleted
+            })
+        });
+    } catch (err) {
+        ticketEl.classList.toggle("done");
+        button.classList.toggle("checked");
+
+        button.textContent = isCompleted ? "" : "";
+
+        console.error(err);
+    }
+}
+
 function renderTickets(tickets) {
     const main = document.getElementById("main");
 
@@ -158,11 +188,18 @@ function renderTickets(tickets) {
 
                 <div class="ticket-grid">
                     ${moduleTickets.map(ticket => `
-                        <div class="ticket ${phaseKey}">
+                        <div class="ticket ${phaseKey} ${ticket.completed ? 'done' : ''}">
                             <div class="ticket-top">
                                 <span class="ticket-id">
                                     ${ticket.code}
                                 </span>
+                                
+                                <button
+                                    class="ticket-check ${ticket.completed ? 'checked' : ''}"
+                                    onclick="toggleTicket(${ticket.id}, this)"
+                                >
+                                    ${ticket.completed ? "" : ""}
+                                </button>
 
                                 <span class="weight-badge w${ticket.weight}">
                                     peso ${ticket.weight}
@@ -219,5 +256,6 @@ function renderTickets(tickets) {
 
 loadTickets();
 
+window.toggleTicket = toggleTicket;
 window.filter = filter;
 countTickets();

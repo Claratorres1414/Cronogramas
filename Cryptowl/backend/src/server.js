@@ -38,10 +38,19 @@ app.post("/tickets", async (req, res) => {
     res.json(ticket);
 });
 
-app.patch("/tickets/:id/complete", async (req, res) => {
+app.patch("/tickets/:id/completion", async (req, res) => {
+    const currentTicket = await prisma.ticket.findUnique({
+        where: { id: Number(req.params.id) }
+    });
+
     const ticket = await prisma.ticket.update({
-        where: { id: Number(req.params.id) },
-        data: { completed: true }
+        where: {
+            id: Number(req.params.id)
+        },
+
+        data: {
+            completed: !currentTicket.completed
+        }
     });
 
     res.json(ticket);
