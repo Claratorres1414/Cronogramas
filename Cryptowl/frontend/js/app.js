@@ -35,6 +35,8 @@ async function loadTickets() {
         const tickets = await response.json();
 
         renderTickets(tickets);
+
+        countTickets();
     } catch (error) {
         console.error("Erro ao carregar tickets:", error);
     }
@@ -300,4 +302,3 @@ loadTickets();
 window.toggleTicket = toggleTicket;
 window.assignTicket = assignTicket;
 window.filter = filter;
-countTickets();
